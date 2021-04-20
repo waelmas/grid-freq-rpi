@@ -51,7 +51,8 @@ struct gpiohandle_request req;
 struct gpiohandle_data data;
 
 //Although req and data can read multiple gpios at a time, we'll use just one
-//This reads line offset 4, which corresponds to the BCM value in "gpio readall"
+//This reads line offset 22, which corresponds to the BCM value in "gpio readall"
+//This corresponds to Physical Pin 15
 req.lineoffsets[0] = 22;
 //have to indicate how many lines we are reading.
 req.lines = 1;
