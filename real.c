@@ -32,12 +32,15 @@ int main(int argc, char **argv) {
             // dig_in = 1;
             // printf()
             change();
+            printf("%d", dig_in);
+
         }
         // } else {
         //     // dig_in = 0;
         //     change0();
         if ((c == 's')){
             change0();
+            printf("%d", dig_in);
         }
             
   
