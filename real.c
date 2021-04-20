@@ -27,17 +27,22 @@ int main(int argc, char **argv) {
     while (1) {
         // nanos = get_nanos();
         char c = getchar();
-        printf("Char: %c", c);
-        if ((c != "a")){
+        // printf("%c\n", c);
+        if ((c == 'a')){
             // dig_in = 1;
+            // printf()
             change();
-  
-        } else {
-            // dig_in = 0;
+        }
+        // } else {
+        //     // dig_in = 0;
+        //     change0();
+        if (!(c == 'a')){
             change0();
+        }
+            
   
 
-        }
+        // }
     }
 
     return EXIT_SUCCESS;
@@ -56,11 +61,11 @@ int main(int argc, char **argv) {
 
 void change(){ 
 	//just assigning 1
-    printf("changed");
+    printf("changed\n");
 	dig_in = 1;				 
 } 
 void change0(){ 
 	//just assigning 1
-    printf("back to zero");
+    printf("back to zero\n");
 	dig_in = 0;				 
 } 
