@@ -11,7 +11,7 @@
 //     return (long)ts.tv_sec * 1000000ull + ts.tv_nsec;
 // }
 int dig_in = 0;
-extern dig_in;
+// extern dig_in;
 // extern int dig_in;
 int main(void) {
     // long nanos;
