@@ -38,6 +38,7 @@ int main(void) {
     while (1) {
         
         if ((dig_in == 1)){
+            printf("1");
             nanos = get_nanos();
             time_dif = nanos - last_nanos;
             printf("nanos: %ld & last_nanos: %ld\n", nanos, last_nanos);
@@ -45,6 +46,7 @@ int main(void) {
             last_nanos = nanos;
 
             return EXIT_SUCCESS;
+        }
         // } else {
         //     // printf("skipping");
            
