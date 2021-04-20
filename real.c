@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdint.h>
+#include <inttypes.h>
+
+#include <sys/mman.h>
 
 #include "real.h"
 // #include
@@ -16,8 +20,11 @@
 // extern int dig_in;
 int dig_in;
 int val;
-char *a;
+// char mem1;
+unsigned int addr;
 
+int * const mem1 = (int *)0xe193c998;
+char *a;
 
 void change(); 
 void change0(); 
@@ -27,14 +34,39 @@ void change0();
 int main(int argc, char **argv) {
     char c;
     
+    
     a = (char*)malloc(sizeof(char) * 1);
-    *a = 1;
-    // val = (int)*a;
     
-    printf("%s", &a);
-    
-    
+    // mem1 = &a;
+    // int * const mem1 = dig_in;
 
+    
+    // int *a = (int*)0x22cd28;
+    // *a = 1;
+    val = (int)*a;
+    
+    // printf("%s", mem1);
+    addr = &mem1;
+    // printf("%p\n", &a);
+    printf("value of num = %d\n", *a);
+
+    // printf("%x", addr);
+    // char buf[100];
+    // sprintf(buf, "%" PRIuPTR, (uintptr_t) &a);
+    // printf("The address of x is %s.\n", buf);
+    
+    // //  Read the address.
+    // uintptr_t u;
+    // sscanf(buf, "%" SCNuPTR, &u);
+
+    // //  Convert the integer value to an address.
+    // int *p = (int *) u;
+
+    // //  Modify the int through the new pointer.
+    // *p = 123;
+
+    // //  Display the int.
+    // printf("x = %d\n", a);
     
 
     while (1) {
