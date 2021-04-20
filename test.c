@@ -26,7 +26,7 @@ int main(void) {
     // char *c = "";
     long time_dif;
     float dig1;
-    char str[10];
+    char str[3];
 
     // while (1) {
     //     nanos = get_nanos();
@@ -43,10 +43,12 @@ int main(void) {
             printf("nanos: %ld & last_nanos: %ld\n", nanos, last_nanos);
             printf("Nanos from last peak: %ld\n", time_dif);
             last_nanos = nanos;
+
+            return EXIT_SUCCESS;
         } else {
             // printf("skipping");
            
-            printf(str, "%d", dig_in);
+            printf("%d", dig_in);
         }
     }
     return EXIT_SUCCESS;
