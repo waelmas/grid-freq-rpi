@@ -3,7 +3,7 @@
 #include <time.h>
 #include "real.h"
 // #include
-// extern int dig_in;
+extern int dig_in;
 // dig_ing = 1;
 
 
