@@ -1,6 +1,7 @@
-#ifndef HEADER_H
-#define HEADER_H
-
-extern int dig_in;
-
+#ifdef GLOBALS
+#define EXTERN
+#else
+#define EXTERN extern
 #endif
+
+EXTERN int dig_in;
