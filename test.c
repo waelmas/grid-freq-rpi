@@ -35,15 +35,16 @@ int main(void) {
     //     }
     // }
     while (1) {
-        dig1 = dig_in;
-        if ((dig1 != 0)){
+        
+        if ((dig_in != 0)){
             nanos = get_nanos();
             time_dif = nanos - last_nanos;
             printf("nanos: %ld & last_nanos: %ld\n", nanos, last_nanos);
             printf("Nanos from last peak: %ld\n", time_dif);
             last_nanos = nanos;
         } else {
-            printf("skipping");
+            // printf("skipping");
+            printf(dig_in);
         }
     }
     return EXIT_SUCCESS;
