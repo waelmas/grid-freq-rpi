@@ -48,7 +48,7 @@ int main(void) {
         } else {
             // printf("skipping");
            
-            printf("%d\n", dig_in);
+            printf("%d", dig_in);
         }
     }
     return EXIT_SUCCESS;

@@ -36,7 +36,7 @@ int main(int argc, char **argv) {
         // } else {
         //     // dig_in = 0;
         //     change0();
-        if (!(c == 'a')){
+        if ((c == 's')){
             change0();
         }
             
