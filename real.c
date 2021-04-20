@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
 #include "real.h"
 // #include
 // #include <omp.h>
@@ -13,6 +14,8 @@
 // int dig_in = 0;
 // extern dig_in;
 // extern int dig_in;
+int dig_in;
+
 int main(void) {
     // long nanos;
     // long last_nanos;
