@@ -5,3 +5,4 @@
 #endif
 
 EXTERN int dig_in;
+EXTERN char *a;

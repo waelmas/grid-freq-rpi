@@ -8,6 +8,7 @@
 // dig_ing = 1;
 
 // extern int dig_in;
+int val;
 
 static long get_nanos(void) {
     struct timespec ts;
@@ -16,6 +17,9 @@ static long get_nanos(void) {
 }
 
 int main(void) {
+
+    printf("%s", &a);
+
     long nanos;
     long last_nanos;
     long start;
@@ -36,8 +40,8 @@ int main(void) {
     //     }
     // }
     while (1) {
-        
-        if ((dig_in == 1)){
+        val = (int)*a;
+        if ((val == 88)){
             printf("1");
             nanos = get_nanos();
             time_dif = nanos - last_nanos;
@@ -52,7 +56,7 @@ int main(void) {
            
         //     printf("%d", dig_in);
         // }
-        if ((dig_in == 0)){
+        if ((val == 16)){
             printf("0");
         }
     }
