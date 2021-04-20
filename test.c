@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define GLOBALS 1
 #include "real.h"
+#define GLOBALS 1
+
 // #include
 // extern int dig_in;
 // dig_ing = 1;

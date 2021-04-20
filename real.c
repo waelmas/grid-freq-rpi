@@ -14,7 +14,7 @@
 // int dig_in = 0;
 // extern dig_in;
 // extern int dig_in;
-int dig_in = 0;
+int dig_in;
 
 void change(); 
 void change0(); 
