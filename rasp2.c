@@ -150,7 +150,7 @@ while(1){
                 }
             last_val = 1;
         } else {
-            //  printf("OFF\n %s \n", shmem);
+             printf("OFF\n %s \n", shmem);
              last_val = 0;
         }
     // usleep(250000);
