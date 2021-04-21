@@ -12,9 +12,6 @@
 
 char dig_in;
 
-void change(); 
-void change0(); 
-
 void* create_shared_memory(size_t size) {
   // Our memory buffer will be readable and writable:
   int protection = PROT_READ | PROT_WRITE;
@@ -29,22 +26,6 @@ void* create_shared_memory(size_t size) {
   return mmap(NULL, size, protection, visibility, -1, 0);
 }
 
-void change(){ 
-	//just assigning 1
-    // char* a = &a;
-    // a = (char*)malloc(sizeof(char) * 1);
-    printf("changed\n");
-	dig_in = '1';
-    	 
-} 
-void change0(){ 
-	//just assigning 1
-    // char* a = &a;
-    // a = (char*)malloc(sizeof(char) * 1);
-    printf("back to zero\n");
-	dig_in = '0';	
-    		 
-}
 
 static long get_nanos(void) {
     struct timespec ts;
@@ -52,17 +33,8 @@ static long get_nanos(void) {
     return (long)ts.tv_sec * 1000000ull + ts.tv_nsec;
 }
 
-
-
-
-
 int main() {
 
-
-
-
-
-//   char child_message_base[] = "000000";
   char parent_message[] = "000000";  // parent process will write this message
   char child_message1[] = "111111"; // child process will then write this one
   char child_message0[] = "000000"; // child process will then write this one
@@ -90,21 +62,6 @@ int main() {
     int last_val = 0;
 
   int pid = fork();
-
-
-  
-    // tt = sizeof(shmem);
-    // printf("shmem: %d\n", tt);
-    //  int   tt1 = sizeof(child_message1);
-    // printf("ON: %d\n", tt1);
-    //   int  tt0 = sizeof(child_message0);
-    // printf("OFF: %d\n", tt0);
-
-    // strcpy(str1, shmem);
-    // comp1 = strncmp(str1, child_message1, 4);
-    // printf("COMP to ON: %d\n string: %s\n", comp1, str1);
-
- 
 
 
 while (1) {
@@ -163,10 +120,7 @@ while(1){
 
             ret = ioctl(req.fd,  GPIOHANDLE_GET_LINE_VALUES_IOCTL, &data);
 
-            // printf("line %d is %s\n",req.lineoffsets[0], data.values[0] ? "high" : "low");
-            //wait 0.25 seconds
-            // usleep(250000);
-            
+          
             if(data.values[0]){
                 // printf(child_message1);
                 memcpy(shmem, child_message1, sizeof(child_message1));
@@ -174,41 +128,10 @@ while(1){
                 // printf(child_message0);
                 memcpy(shmem, child_message0, sizeof(child_message0));
             }
-            // printf(child_message_base);
-            // printf(data.values[0]);
-            // memcpy(shmem, child_message_base, sizeof(child_message_base));
-            // usleep(250000);
+         
 }
 
 
-
-    //    // printf("Sub 1 : %s\n", shmem);
-    //     memcpy(shmem, child_message0, sizeof(child_message0));
-    //     // printf("Sub 1: %s\n", shmem);
-    //         tt = sizeof(shmem);
-    // // printf("shmem 22222: %d\n", tt);
-    //     sleep(1);
-    //     memcpy(shmem, child_message1, sizeof(child_message1));
-    //     // printf("Sub 1: %s\n", shmem);
-    //     sleep(1);
-    //     memcpy(shmem, child_message0, sizeof(child_message0));
-    //     // printf("Sub 1: %s\n", shmem);
-    //     sleep(1);
-    //     memcpy(shmem, child_message1, sizeof(child_message1));
-    //     // printf("Sub 1: %s\n", shmem);
-    //     sleep(1);
-    //     memcpy(shmem, child_message0, sizeof(child_message0));
-    //     // printf("Sub 1: %s\n", shmem);
-    //     sleep(1);
-    //     memcpy(shmem, child_message1, sizeof(child_message1));
-    //     // printf("Sub 1: %s\n", shmem);
-    //     sleep(1);
-    //     memcpy(shmem, child_message0, sizeof(child_message0));
-    //     // printf("Sub 1: %s\n", shmem);
-    //     sleep(1);
-    //     memcpy(shmem, child_message1, sizeof(child_message1));
-    //     sleep(1);
-    //     // printf("Sub 1: %s\n", shmem);
 
     } else {
         // printf("Parent read: %s\n", shmem);
