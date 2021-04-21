@@ -138,7 +138,7 @@ while(1){
         comp1 = strncmp(child_message1, shmem, 4);
 
         if (comp1 == 0){
-            // printf("ON\n %s \n", shmem);
+            printf("RAM: %s \n", shmem);
             
 
             if (last_val == 0){
