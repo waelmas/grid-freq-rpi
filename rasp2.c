@@ -168,9 +168,11 @@ while(1){
             // usleep(250000);
             
             if(data.values[0]){
-                printf(child_message1);
+                // printf(child_message1);
+                memcpy(shmem, child_message1, sizeof(child_message1));
             } else{
-                printf(child_message0);
+                // printf(child_message0);
+                memcpy(shmem, child_message0, sizeof(child_message0));
             }
             // printf(child_message_base);
             // printf(data.values[0]);
