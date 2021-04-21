@@ -141,14 +141,14 @@ while(1){
             // printf("RAM: %s \n", shmem);
             
 
-            if (last_val){
+            if (last_val == 0){
                 nanos = get_nanos();
                 time_dif = nanos - last_nanos;
                 // printf("nanos: %llu & last_nanos: %llu\n", nanos, last_nanos);
                 printf("Nanos from start of previous peak: %llu\n", time_dif);
                 last_nanos = nanos;
                 }
-            last_val = 1;
+            // last_val = 1;
         } else {
             //  printf("OFF\n %s \n", shmem);
              last_val = 0;
