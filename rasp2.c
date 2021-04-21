@@ -62,7 +62,7 @@ int main() {
 
 
 
-  char child_message_base = "000000";
+  char child_message_base[] = "000000";
   char parent_message[] = "000000";  // parent process will write this message
   char child_message1[] = "111111"; // child process will then write this one
   char child_message0[] = "000000"; // child process will then write this one
