@@ -77,3 +77,6 @@ for(int ii = 0; ii < 1000; ++ii){
 
 return 0;
 }
+
+
+// OUTPUT PIN USED: Physical >> 24 BCM: 8

@@ -101,27 +101,27 @@ while (1) {
         // printf("Sub 1: %s\n", shmem);
             tt = sizeof(shmem);
     // printf("shmem 22222: %d\n", tt);
-        sleep(0.01);
+        sleep(1);
         memcpy(shmem, child_message1, sizeof(child_message1));
         // printf("Sub 1: %s\n", shmem);
-        sleep(0.01);
+        sleep(1);
         memcpy(shmem, child_message0, sizeof(child_message0));
         // printf("Sub 1: %s\n", shmem);
-        sleep(0.01);
+        sleep(1);
         memcpy(shmem, child_message1, sizeof(child_message1));
         // printf("Sub 1: %s\n", shmem);
-        sleep(0.01);
+        sleep(1);
         memcpy(shmem, child_message0, sizeof(child_message0));
         // printf("Sub 1: %s\n", shmem);
-        sleep(0.01);
+        sleep(1);
         memcpy(shmem, child_message1, sizeof(child_message1));
         // printf("Sub 1: %s\n", shmem);
-        sleep(0.01);
+        sleep(1);
         memcpy(shmem, child_message0, sizeof(child_message0));
         // printf("Sub 1: %s\n", shmem);
-        sleep(0.01);
+        sleep(1);
         memcpy(shmem, child_message1, sizeof(child_message1));
-        sleep(0.01);
+        sleep(1);
         // printf("Sub 1: %s\n", shmem);
 
     } else {
