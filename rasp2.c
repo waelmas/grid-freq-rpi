@@ -143,7 +143,7 @@ while(1){
 
             if (last_val == 0){
                 nanos = get_nanos();
-                time_dif = nanos - last_nanos;
+                time_dif = (nanos.tv_sec + nanos.tv_nsec) - (last_nanos.tv_sec + last_nanos.tv_nsec) ;
                 // printf("nanos: %llu & last_nanos: %llu\n", nanos, last_nanos);
                 printf("Nanos from start of previous peak: %09llu\n", time_dif);
                 last_nanos = nanos;
