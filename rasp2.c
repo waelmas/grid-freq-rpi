@@ -30,7 +30,7 @@ void* create_shared_memory(size_t size) {
 static long get_nanos(void) {
     struct timespec ts;
     timespec_get(&ts, TIME_UTC);
-    return (unsigned long long)ts.tv_sec + ts.tv_nsec;
+    return (unsigned long long)ts.tv_sec * 1000000000ull + ts.tv_nsec;
 }
 
 int main() {
@@ -144,8 +144,8 @@ while(1){
             if (last_val == 0){
                 nanos = get_nanos();
                 time_dif = nanos - last_nanos;
-                printf("nanos: %llu & last_nanos: %llu\n", nanos, last_nanos);
-                // printf("Nanos from start of previous peak: %llu\n", time_dif);
+                // printf("nanos: %llu & last_nanos: %llu\n", nanos, last_nanos);
+                printf("Nanos from start of previous peak: %09llu\n", time_dif);
                 last_nanos = nanos;
                 }
             last_val = 1;
