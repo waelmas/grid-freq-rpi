@@ -62,7 +62,7 @@ int main() {
 
 
 
-  char child_message_base[] = "000000";
+  char child_message_base[];
   char parent_message[] = "000000";  // parent process will write this message
   char child_message1[] = "111111"; // child process will then write this one
   char child_message0[] = "000000"; // child process will then write this one
@@ -168,11 +168,11 @@ while(1){
             // usleep(250000);
             
             if(data.values[0]){
-                child_message_base = child_message1;
+                printf(child_message1);
             } else{
-                child_message_base = child_message0;
+                printf(child_message0);
             }
-            printf(child_message_base);
+            // printf(child_message_base);
             // printf(data.values[0]);
             // memcpy(shmem, child_message_base, sizeof(child_message_base));
             // usleep(250000);
