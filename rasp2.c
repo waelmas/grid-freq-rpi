@@ -51,8 +51,8 @@ int main() {
 
   int tt;
 
-    struct nanos;
-    struct last_nanos;
+    struct timespec nanos;
+    struct timespec last_nanos;
     unsigned long long start;
     nanos = get_nanos();
     last_nanos = nanos;
