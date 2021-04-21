@@ -16,7 +16,7 @@ from ctypes import *
 class Payload(Structure):
     _fields_ = [("id", c_uint32),
                 ("counter", c_uint32),
-                ("temp", c_float)]
+                ("period", c_uint32)]
 
 
 def main():
@@ -30,9 +30,9 @@ def main():
         for i in range(5):
             print("")
             payload_out = Payload(1, i, random.uniform(-10, 30))
-            print("Sending id={:d}, counter={:d}, temp={:f}".format(payload_out.id,
+            print("Sending id={:d}, counter={:d}, period={:d}".format(payload_out.id,
                                                               payload_out.counter,
-                                                              payload_out.temp))
+                                                              payload_out.period))
             nsent = s.send(payload_out)
             # Alternative: s.sendall(...): coontinues to send data until either
             # all data has been sent or an error occurs. No return value.
@@ -40,9 +40,9 @@ def main():
 
             buff = s.recv(sizeof(Payload))
             payload_in = Payload.from_buffer_copy(buff)
-            print("Received id={:d}, counter={:d}, temp={:f}".format(payload_in.id,
+            print("Received id={:d}, counter={:d}, period={:d}".format(payload_in.id,
                                                                payload_in.counter,
-                                                               payload_in.temp))
+                                                               payload_in.period))
     except AttributeError as ae:
         print("Error creating the socket: {}".format(ae))
     except socket.error as se:

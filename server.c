@@ -13,7 +13,7 @@
 typedef struct payload_t {
     uint32_t id;
     uint32_t counter;
-    float temp;
+    uint32_t period;
 } payload;
 
 #pragma pack()
@@ -93,8 +93,8 @@ int main()
         {
             printf("\nReceived %d bytes\n", nread);
             payload *p = (payload*) buff;
-            printf("Received contents: id=%d, counter=%d, temp=%f\n",
-                    p->id, p->counter, p->temp);
+            printf("Received contents: id=%d, counter=%d, period=%d\n",
+                    p->id, p->counter, p->period);
 
             printf("Sending it back.. ");
             sendMsg(csock, p, sizeof(payload));
