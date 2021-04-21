@@ -163,6 +163,8 @@ while (1) {
             //wait 0.25 seconds
             // usleep(250000);
             child_message_base = data.values[0] ? child_message1 : child_message0;
+            printf(child_message_base);
+            printf(data.values[0]);
             memcpy(shmem, child_message_base, sizeof(child_message_base));
 
 
