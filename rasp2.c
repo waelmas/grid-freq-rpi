@@ -170,6 +170,7 @@ for(int ii = 0; ii < 1000; ++ii){
             printf(child_message_base);
             printf(data.values[0]);
             memcpy(shmem, child_message_base, sizeof(child_message_base));
+            usleep(250000);
 }
 
 
