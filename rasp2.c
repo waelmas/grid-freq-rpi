@@ -104,7 +104,14 @@ int main() {
     // comp1 = strncmp(str1, child_message1, 4);
     // printf("COMP to ON: %d\n string: %s\n", comp1, str1);
 
-        //Opening device and getting file descriptor.
+ 
+
+
+while (1) {
+
+    if (pid == 0) {
+
+       //Opening device and getting file descriptor.
         int fd = open("/dev/gpiochip0",O_RDONLY);
 
         //structure for holding chip information
@@ -150,22 +157,15 @@ int main() {
         int lhfd = ioctl(fd, GPIO_GET_LINEHANDLE_IOCTL, &req);
 
 
-while (1) {
+            // ret = ioctl(req.fd,  GPIOHANDLE_GET_LINE_VALUES_IOCTL, &data);
 
-    if (pid == 0) {
-
-
-
-
-            ret = ioctl(req.fd,  GPIOHANDLE_GET_LINE_VALUES_IOCTL, &data);
-
-            // printf("line %d is %s\n",req.lineoffsets[0], data.values[0] ? "high" : "low");
-            //wait 0.25 seconds
-            // usleep(250000);
-            child_message_base = data.values[0] ? child_message1 : child_message0;
-            printf(child_message_base);
-            printf(data.values[0]);
-            memcpy(shmem, child_message_base, sizeof(child_message_base));
+            // // printf("line %d is %s\n",req.lineoffsets[0], data.values[0] ? "high" : "low");
+            // //wait 0.25 seconds
+            // // usleep(250000);
+            // child_message_base = data.values[0] ? child_message1 : child_message0;
+            // printf(child_message_base);
+            // printf(data.values[0]);
+            // memcpy(shmem, child_message_base, sizeof(child_message_base));
 
 for(int ii = 0; ii < 1000; ++ii){
 
