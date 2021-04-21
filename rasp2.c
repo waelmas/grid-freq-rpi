@@ -30,7 +30,8 @@ void* create_shared_memory(size_t size) {
 static long get_nanos(void) {
     struct timespec ts;
     timespec_get(&ts, TIME_UTC);
-    return (unsigned long long)ts.tv_sec * 1000000000ull + ts.tv_nsec;
+    // return (unsigned long long)ts.tv_sec * 1000000000ull + ts.tv_nsec;
+    return (struct)ts;
 }
 
 int main() {
