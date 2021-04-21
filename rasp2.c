@@ -148,7 +148,7 @@ while(1){
                 printf("Nanos from start of previous peak: %llu\n", time_dif);
                 last_nanos = nanos;
                 }
-            // last_val = 1;
+            last_val = 1;
         } else {
             //  printf("OFF\n %s \n", shmem);
              last_val = 0;
