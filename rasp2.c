@@ -207,7 +207,7 @@ for(int ii = 0; ii < 1000; ++ii){
         comp1 = strncmp(child_message1, shmem, 4);
 
         if (comp1 == 0){
-            // printf("ON\n %s \n", shmem);
+            printf("ON\n %s \n", shmem);
             
 
             if (last_val == 0){
@@ -219,7 +219,7 @@ for(int ii = 0; ii < 1000; ++ii){
                 }
             last_val = 1;
         } else {
-            //  printf("OFF\n %s \n", shmem);
+             printf("OFF\n %s \n", shmem);
              last_val = 0;
         }
 
