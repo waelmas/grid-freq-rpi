@@ -222,7 +222,7 @@ for(int ii = 0; ii < 1000; ++ii){
             //  printf("OFF\n %s \n", shmem);
              last_val = 0;
         }
-
+    usleep(250000);
     }
     }
 }
