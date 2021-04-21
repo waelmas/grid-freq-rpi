@@ -123,14 +123,6 @@ int main() {
         //structure defined in /usr/include/linux/gpio.h
         struct gpioline_info linfo;
 
-
-
-
-while (1) {
-
-    if (pid == 0) {
-
-
         //get generic line information from system call
         ret = ioctl(fd,GPIO_GET_LINEINFO_IOCTL, &linfo);
 
@@ -156,6 +148,14 @@ while (1) {
 
         //Get a line handle. Note that req.fd is provided a handle for the next ioctl. 
         int lhfd = ioctl(fd, GPIO_GET_LINEHANDLE_IOCTL, &req);
+
+
+while (1) {
+
+    if (pid == 0) {
+
+
+
 
             ret = ioctl(req.fd,  GPIOHANDLE_GET_LINE_VALUES_IOCTL, &data);
 
