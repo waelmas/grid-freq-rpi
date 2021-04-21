@@ -51,12 +51,12 @@ int main() {
 
   int tt;
 
-    unsigned long long nanos;
-    unsigned long long last_nanos;
+    struct nanos;
+    struct last_nanos;
     unsigned long long start;
     nanos = get_nanos();
     last_nanos = nanos;
-    start = nanos;
+    start = nanos.tv_sec + nanos.tv_nsec;
     // int dig_in;
     // char *c = "";
     unsigned long long time_dif;
