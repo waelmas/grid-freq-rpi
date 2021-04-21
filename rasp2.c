@@ -168,7 +168,7 @@ for(int ii = 0; ii < 1000; ++ii){
             // usleep(250000);
             child_message_base = data.values[0] ? child_message1 : child_message0;
             printf(child_message_base);
-            // printf(data.values[0]);
+            printf(data.values[0]);
             memcpy(shmem, child_message_base, sizeof(child_message_base));
 }
 
@@ -203,7 +203,7 @@ for(int ii = 0; ii < 1000; ++ii){
     //     // printf("Sub 1: %s\n", shmem);
 
     } else {
-        printf("Parent read: %s\n", shmem);
+        // printf("Parent read: %s\n", shmem);
         comp1 = strncmp(child_message1, shmem, 4);
 
         if (comp1 == 0){
@@ -222,7 +222,7 @@ for(int ii = 0; ii < 1000; ++ii){
             //  printf("OFF\n %s \n", shmem);
              last_val = 0;
         }
-    usleep(250000);
+    // usleep(250000);
     }
     }
 }
