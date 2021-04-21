@@ -149,8 +149,8 @@ while(1){
                 last_nanos = nanos;
                 }
             last_val = 1;
-        } else {
-             printf("OFF\n %s \n", shmem);
+        } else if (last_val == 1){
+            //  printf("OFF\n %s \n", shmem);
              last_val = 0;
         }
     // usleep(250000);
