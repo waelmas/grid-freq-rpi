@@ -166,7 +166,7 @@ while(1){
             // printf("line %d is %s\n",req.lineoffsets[0], data.values[0] ? "high" : "low");
             //wait 0.25 seconds
             // usleep(250000);
-            child_message_base = data.values[0] ? child_message1 : child_message0;
+            child_message_base = (data.values[0] ? child_message1 : child_message0);
             printf(child_message_base);
             // printf(data.values[0]);
             // memcpy(shmem, child_message_base, sizeof(child_message_base));
