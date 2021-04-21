@@ -50,15 +50,15 @@ int main() {
 
   int tt;
 
-      long nanos;
-    long last_nanos;
-    long start;
+    unsigned long long nanos;
+    unsigned long long last_nanos;
+    unsigned long long start;
     nanos = get_nanos();
     last_nanos = nanos;
     start = nanos;
     // int dig_in;
     // char *c = "";
-    long time_dif;
+    unsigned long long time_dif;
     int last_val = 0;
 
   int pid = fork();
@@ -144,8 +144,8 @@ while(1){
             if (last_val == 0){
                 nanos = get_nanos();
                 time_dif = nanos - last_nanos;
-                printf("nanos: %ld & last_nanos: %ld\n", nanos, last_nanos);
-                printf("Nanos from start of previous peak: %ld\n", time_dif);
+                printf("nanos: %llu & last_nanos: %llu\n", nanos, last_nanos);
+                printf("Nanos from start of previous peak: %llu\n", time_dif);
                 last_nanos = nanos;
                 }
             last_val = 1;
