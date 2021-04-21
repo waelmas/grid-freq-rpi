@@ -138,10 +138,10 @@ while(1){
         comp1 = strncmp(child_message1, shmem, 4);
 
         if (comp1 == 0){
-            printf("RAM: %s \n", shmem);
+            // printf("RAM: %s \n", shmem);
             
 
-            if (last_val == 0){
+            if (last_val){
                 nanos = get_nanos();
                 time_dif = nanos - last_nanos;
                 // printf("nanos: %llu & last_nanos: %llu\n", nanos, last_nanos);
