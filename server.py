@@ -51,7 +51,7 @@ def main():
                 #                                             payload_in.period))
                 # print("Sending it back.. ", end='')
                 period1 = payload_in.period
-                seconds_p = (period1 * 2) * 0.0000000001
+                seconds_p = (period1 * 2) * 0.000000001
                 freq = 1 / seconds_p
                 print("Elapsed: {} \n".format(freq))
                 # nsent = csock.send(payload_in)
