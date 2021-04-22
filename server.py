@@ -44,12 +44,14 @@ def main():
             # print(buff)
             while buff:
                 # buff = csock.recv(512)
-                print("\nReceived {:d} bytes".format(len(buff)))
+                # print("\nReceived {:d} bytes".format(len(buff)))
                 payload_in = Payload.from_buffer_copy(buff)
-                print("Received contents id={:d}, counter={:d}, period={:d}".format(payload_in.id,
-                                                            payload_in.counter,
-                                                            payload_in.period))
+                # print("Received contents id={:d}, counter={:d}, period={:d}".format(payload_in.id,
+                #                                             payload_in.counter,
+                #                                             payload_in.period))
                 # print("Sending it back.. ", end='')
+                freq = 1 / payload_in.period
+                print("Msg ID: {:d} Frequency: {0:.3f} \n".format(payload_in.id, freq))
                 # nsent = csock.send(payload_in)
                 # print("Sent {:d} bytes".format(nsent))
                 buff = csock.recv(512)
