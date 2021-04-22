@@ -63,6 +63,7 @@ def main():
                 # nsent = csock.send(payload_in)
                 # print("Sent {:d} bytes".format(nsent))
                 buff = csock.recv(512)
+                splitter += 1
                 # buff = b''
             # time.sleep(0.5)
             # else:
