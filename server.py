@@ -37,6 +37,9 @@ def main():
         
         splitter = 0
         old_freq = 0
+        freq_list_1 = []
+        freq_list_2 = []
+        total_time = 0
         while True:
             csock, client_address = ssock.accept()
             # print("Accepted connection from {:s}".format(client_address[0]))
@@ -55,9 +58,13 @@ def main():
                 seconds_p = (period1 * 2) * 0.000000001
                 freq = 1 / seconds_p
 
+                total_time = total_time + (period1 * 0.000000001)
+
                 if (splitter % 2) == 0:
-                    print("Half 1: {} Half 2: {} \n".format(old_freq, freq))
+                    # print("Half 1: {} Half 2: {} \n".format(old_freq, freq))
+                    freq_list_1.append(freq)
                 else:
+                    freq_list_2.append(freq)
                     old_freq = freq
                     # print("Half 2: {} \n".format(freq))
 
@@ -66,6 +73,13 @@ def main():
                 # print("Sent {:d} bytes".format(nsent))
                 buff = csock.recv(512)
                 splitter += 1
+                if total_time >= 1.00:
+                    freq_average_2 = sum(freq_list_2) / len(freq_list_2)
+                    freq_average_1 = sum(freq_list_1) / len(freq_list_1)
+                    freq_average_both = (sum(freq_list_1) + sum(freq_list_2)) / (len(freq_list_1) + len(freq_list_2))
+                    print("Average 1: {} Average 2: {} \n".format(freq_average_1, freq_average_2))
+                    print("Totoal Average: {} \n".format(freq_average_both))
+                    
                 # buff = b''
             # time.sleep(0.5)
             # else:
@@ -81,6 +95,7 @@ def main():
         print("Exception on socket: {}".format(se))
     except KeyboardInterrupt:
         ssock.close()
+        
     finally:
         print("Closing socket")
         ssock.close()
