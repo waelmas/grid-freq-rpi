@@ -10,13 +10,14 @@ import socket
 import sys
 import random
 from ctypes import *
+import time
 
 
 """ This class defines a C-like struct """
 class Payload(Structure):
     _fields_ = [("id", c_uint32),
                 ("counter", c_uint32),
-                ("period", c_uint32)]
+                ("period", c_ulonglong)]
 
 
 def main():
@@ -31,26 +32,35 @@ def main():
         print("Bind done")
         ssock.listen(3)
         print("Server listening on port {:d}".format(PORT))
+        # csock, client_address = ssock.accept()
+        # print("Accepted connection from {:s}".format(client_address[0]))
+        
 
         while True:
             csock, client_address = ssock.accept()
-            print("Accepted connection from {:s}".format(client_address[0]))
+            # print("Accepted connection from {:s}".format(client_address[0]))
 
             buff = csock.recv(512)
+            # print(buff)
             while buff:
+                # buff = csock.recv(512)
                 print("\nReceived {:d} bytes".format(len(buff)))
                 payload_in = Payload.from_buffer_copy(buff)
                 print("Received contents id={:d}, counter={:d}, period={:d}".format(payload_in.id,
                                                             payload_in.counter,
                                                             payload_in.period))
-                print("Sending it back.. ", end='')
-                nsent = csock.send(payload_in)
-                print("Sent {:d} bytes".format(nsent))
+                # print("Sending it back.. ", end='')
+                # nsent = csock.send(payload_in)
+                # print("Sent {:d} bytes".format(nsent))
                 buff = csock.recv(512)
+                # buff = b''
+            # time.sleep(0.5)
+            # else:
+                # print("No data \n")
 
-            print("Closing connection to client")
-            print("----------------------------")
-            csock.close()
+            # print("Closing connection to client")
+            # print("----------------------------")
+            # csock.close()
 
     except AttributeError as ae:
         print("Error creating the socket: {}".format(ae))
