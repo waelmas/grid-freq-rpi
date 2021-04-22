@@ -50,8 +50,8 @@ def main():
                 #                                             payload_in.counter,
                 #                                             payload_in.period))
                 # print("Sending it back.. ", end='')
-                freq = 1 / payload_in.period
-                print("Msg ID: {} Frequency: {} \n".format(payload_in.id, freq))
+                period1 = payload_in.period
+                print("Elapsed: {} \n".format(period1))
                 # nsent = csock.send(payload_in)
                 # print("Sent {:d} bytes".format(nsent))
                 buff = csock.recv(512)
