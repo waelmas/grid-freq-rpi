@@ -35,7 +35,7 @@ def main():
         # csock, client_address = ssock.accept()
         # print("Accepted connection from {:s}".format(client_address[0]))
         
-
+        splitter = 0
         while True:
             csock, client_address = ssock.accept()
             # print("Accepted connection from {:s}".format(client_address[0]))
@@ -53,7 +53,13 @@ def main():
                 period1 = payload_in.period
                 seconds_p = (period1 * 2) * 0.000000001
                 freq = 1 / seconds_p
-                print("Elapsed: {} \n".format(freq))
+
+                if (splitter % 2) == 0:
+                    print("Half 1: {} ".format(freq))
+                else:
+                    print("Half 2: {} \n".format(freq))
+
+                # print("Elapsed: {} \n".format(freq))
                 # nsent = csock.send(payload_in)
                 # print("Sent {:d} bytes".format(nsent))
                 buff = csock.recv(512)
