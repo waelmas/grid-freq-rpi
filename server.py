@@ -29,7 +29,7 @@ def event_handler_write(writer, utc_timestamps, calc_freq_both, calc_freq_1, cal
 
 
 def main():
-    outfile = 'data_.csv'
+    outfile = 'data/data_.csv'
     file_count = 0
     file_check = True
 

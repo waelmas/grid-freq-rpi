@@ -26,6 +26,9 @@ outfile = 'data_.csv'
 file_count = 0
 file_check = True
 
+# utc_posix = datetime.now().timestamp()
+# file_timestamp = datetime.utcfromtimestamp(utc_posix).strftime('%Y-%m-%d-%H-%M')
+
 while file_check:
     file_count += 1
     file_name = outfile.split("_")
@@ -40,6 +43,10 @@ csvfile = open(outfile, 'w')
 writer = csv.writer(csvfile)
 writer.writerow(["Timestamp UTC", "Freq Average Full", "Freq Average Half 1", "Freq Average Half 2"])
 csvfile.close()
+
+
+
+
 
 
 csvfile = open(outfile, 'a')
