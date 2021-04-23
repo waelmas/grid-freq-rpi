@@ -72,17 +72,17 @@ def main():
         batch_size = 10
 
         # To optimize Python garbage collector, instead of appending to lists we init them then change values
-        calc_freq_both = [None] * batch_size
-        calc_freq_1 = [None] * batch_size
-        calc_freq_2 = [None] * batch_size
-        list_times = [None] * batch_size
+        calc_freq_both = [None] * batch_size + 1
+        calc_freq_1 = [None] * batch_size + 1
+        calc_freq_2 = [None] * batch_size + 1
+        list_times = [None] * batch_size + 1
 
         # We cannot use the garbage collctor trick here as we cannot know how large this could be now
         # In the future we can use an estimation with a safety and test
         freq_list_1 = []
         freq_list_2 = []
 
-        rows_count = 0
+        rows_count = 1
         total_time = 0
 
 
@@ -138,11 +138,11 @@ def main():
                     
                     if rows_count >= batch_size:
                         event_handler_write(writer, batch_size, list_times, calc_freq_both, calc_freq_1, calc_freq_2)
-                        rows_count = 0
-                        list_times = [None] * batch_size
-                        calc_freq_both = [None] * batch_size
-                        calc_freq_1 = [None] * batch_size
-                        calc_freq_2 = [None] * batch_size
+                        rows_count = 1
+                        list_times = [None] * batch_size + 1
+                        calc_freq_both = [None] * batch_size + 1
+                        calc_freq_1 = [None] * batch_size + 1
+                        calc_freq_2 = [None] * batch_size + 1
 
                     rows_count += 1
 
