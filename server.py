@@ -11,7 +11,9 @@ import sys
 import random
 from ctypes import *
 import time
-
+from datetime import datetime
+import csv
+import os.path
 
 """ This class defines a C-like struct """
 class Payload(Structure):
@@ -19,12 +21,41 @@ class Payload(Structure):
                 ("counter", c_uint32),
                 ("period", c_ulonglong)]
 
+# csv batch writer
+def event_handler_write(writer, utc_timestamps, calc_freq_both, calc_freq_1, calc_freq_2):
+    for i in range(len(calc_freq_both)):
+        writer.writerow([utc_timestamps[i], calc_freq_both[i], calc_freq_1[i], calc_freq_2[i]])
+    print("Wrote {} rows\n".format(len(calc_freq_both)))
+
 
 def main():
+    outfile = 'data_.csv'
+    file_count = 0
+    file_check = True
+
+    #  Using this to create a new file if older versions exist and keep linking of sequence
+    while file_check:
+        file_count += 1
+        file_name = outfile.split("_")
+        outfile = file_name[0] + "_" + str(file_count) + ".csv"
+        file_check = os.path.isfile(outfile)
+
+
+    print("Writing to: {} \n".format(outfile))
+
+
+    csvfile = open(outfile, 'w')
+    writer = csv.writer(csvfile)
+    writer.writerow(["Timestamp UTC", "Freq Average Full", "Freq Average Half 1", "Freq Average Half 2"])
+    csvfile.close()
+
     PORT = 2300
     server_addr = ('localhost', PORT)
     ssock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     print("Socket created")
+
+    csvfile = open(outfile, 'a')
+    writer = csv.writer(csvfile)
 
     try:
         # bind the server socket and listen
@@ -32,28 +63,38 @@ def main():
         print("Bind done")
         ssock.listen(3)
         print("Server listening on port {:d}".format(PORT))
-        # csock, client_address = ssock.accept()
-        # print("Accepted connection from {:s}".format(client_address[0]))
+
         
         splitter = 0
         old_freq = 0
+
+
+        # To optimize Python garbage collector, instead of appending to lists we init them then change values
+        calc_freq_both = [None] * 1801
+        calc_freq_1 = [None] * 1801
+        calc_freq_2 = [None] * 1801
+        list_times = [None] * 1801
+
+        # We cannot use the garbage collctor trick here as we cannot know how large this could be now
+        # In the future we can use an estimation with a safety and test
         freq_list_1 = []
         freq_list_2 = []
+
+        rows_count = 0
         total_time = 0
+        # write to csv every 1800 rows > 30 mins
+        batch_size = 1800
+
         while True:
             csock, client_address = ssock.accept()
-            # print("Accepted connection from {:s}".format(client_address[0]))
+
 
             buff = csock.recv(512)
-            # print(buff)
+
             while buff:
-                # buff = csock.recv(512)
-                # print("\nReceived {:d} bytes".format(len(buff)))
+
                 payload_in = Payload.from_buffer_copy(buff)
-                # print("Received contents id={:d}, counter={:d}, period={:d}".format(payload_in.id,
-                #                                             payload_in.counter,
-                #                                             payload_in.period))
-                # print("Sending it back.. ", end='')
+
                 period1 = payload_in.period
                 seconds_p = (period1 * 2) * 0.000000001
                 freq = 1 / seconds_p
@@ -61,46 +102,63 @@ def main():
                 total_time = total_time + (period1 * 0.000000001)
 
                 if (splitter % 2) == 0:
-                    # print("Half 1: {} Half 2: {} \n".format(old_freq, freq))
+
                     freq_list_1.append(freq)
                 else:
                     freq_list_2.append(freq)
                     old_freq = freq
-                    # print("Half 2: {} \n".format(freq))
 
-                # print("Elapsed: {} \n".format(freq))
-                # nsent = csock.send(payload_in)
-                # print("Sent {:d} bytes".format(nsent))
+
+
                 buff = csock.recv(512)
                 splitter += 1
                 if total_time >= 1.00:
+                    # get timestamp before other operations to be as close as possible to the source time
+                    utc_posix = datetime.now().timestamp()
+                    utc_timestamp = datetime.utcfromtimestamp(utc_posix).strftime('%Y-%m-%d %H:%M:%S.%f%z')
+
                     freq_average_2 = sum(freq_list_2) / len(freq_list_2)
                     freq_average_1 = sum(freq_list_1) / len(freq_list_1)
                     freq_average_both = (sum(freq_list_1) + sum(freq_list_2)) / (len(freq_list_1) + len(freq_list_2))
                     print("Average 1: {} Average 2: {} \n".format(freq_average_1, freq_average_2))
                     print("Totoal Average: {} \n".format(freq_average_both))
                     print("Time: {} \n".format(total_time))
-                    total_time = 0
-                    
-                # buff = b''
-            # time.sleep(0.5)
-            # else:
-                # print("No data \n")
 
-            # print("Closing connection to client")
-            # print("----------------------------")
-            # csock.close()
+                    list_times[rows_count] = utc_timestamp
+                    calc_freq_both[rows_count] = freq_average_both
+                    calc_freq_1[rows_count] = freq_average_1
+                    calc_freq_2[rows_count] = freq_average_2
+                    
+
+
+                    total_time = 0
+
+                
+                if rows_count >= batch_size:
+                    event_handler_write(writer, list_times, calc_freq_both, calc_freq_1, calc_freq_2)
+                    rows_count = 0
+                    list_times = [None] * 1801
+                    calc_freq_both = [None] * 1801
+                    calc_freq_1 = [None] * 1801
+                    calc_freq_2 = [None] * 1801
+                else:
+                    rows_count += 1
+
 
     except AttributeError as ae:
         print("Error creating the socket: {}".format(ae))
+        csvfile.close()
     except socket.error as se:
         print("Exception on socket: {}".format(se))
+        csvfile.close()
     except KeyboardInterrupt:
         ssock.close()
+        csvfile.close()
         
     finally:
         print("Closing socket")
         ssock.close()
+        csvfile.close()
 
 
 if __name__ == "__main__":
