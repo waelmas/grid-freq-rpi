@@ -81,7 +81,7 @@ def main():
         freq_list_1 = []
         freq_list_2 = []
 
-        rows_count = 0
+        rows_count = 1
         total_time = 0
         # write to csv every 1800 rows
         batch_size = 1800
@@ -125,6 +125,7 @@ def main():
                     print("Totoal Average: {} \n".format(freq_average_both))
                     # print("Time: {} \n".format(total_time))
 
+                    print(rows_count)
                     list_times[rows_count] = utc_timestamp
                     calc_freq_both[rows_count] = freq_average_both
                     calc_freq_1[rows_count] = freq_average_1
@@ -137,7 +138,7 @@ def main():
                 
                 if rows_count >= batch_size:
                     event_handler_write(writer, list_times, calc_freq_both, calc_freq_1, calc_freq_2)
-                    rows_count = 0
+                    rows_count = 1
                     list_times = [None] * 1801
                     calc_freq_both = [None] * 1801
                     calc_freq_1 = [None] * 1801
