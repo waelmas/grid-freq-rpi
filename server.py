@@ -84,7 +84,7 @@ def main():
         rows_count = 1
         total_time = 0
         # write to csv every 1800 rows
-        batch_size = 1800
+        batch_size = 10
 
         while True:
             csock, client_address = ssock.accept()
