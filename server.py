@@ -82,7 +82,7 @@ def main():
         freq_list_1 = []
         freq_list_2 = []
 
-        rows_count = 1
+        rows_count = 0
         total_time = 0
 
 
@@ -138,7 +138,7 @@ def main():
                     
                     if rows_count >= batch_size:
                         event_handler_write(writer, batch_size, list_times, calc_freq_both, calc_freq_1, calc_freq_2)
-                        rows_count = 1
+                        rows_count = 0
                         list_times = [None] * batch_size
                         calc_freq_both = [None] * batch_size
                         calc_freq_1 = [None] * batch_size
