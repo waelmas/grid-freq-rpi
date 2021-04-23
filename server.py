@@ -82,7 +82,7 @@ def main():
 
         rows_count = 0
         total_time = 0
-        # write to csv every 1800 rows > 30 mins
+        # write to csv every 1800 rows
         batch_size = 1800
 
         while True:
@@ -144,6 +144,7 @@ def main():
                 else:
                     rows_count += 1
 
+            csvfile.close()
 
     except AttributeError as ae:
         print("Error creating the socket: {}".format(ae))
