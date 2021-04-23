@@ -24,6 +24,7 @@ class Payload(Structure):
 # csv batch writer
 def event_handler_write(writer, utc_timestamps, calc_freq_both, calc_freq_1, calc_freq_2):
     for i in range(len(calc_freq_both)):
+        print([utc_timestamps[i], calc_freq_both[i], calc_freq_1[i], calc_freq_2[i]])
         writer.writerow([utc_timestamps[i], calc_freq_both[i], calc_freq_1[i], calc_freq_2[i]])
     print("Wrote {} rows\n".format(len(calc_freq_both)))
 
@@ -122,7 +123,7 @@ def main():
                     freq_average_both = (sum(freq_list_1) + sum(freq_list_2)) / (len(freq_list_1) + len(freq_list_2))
                     print("Average 1: {} Average 2: {} \n".format(freq_average_1, freq_average_2))
                     print("Totoal Average: {} \n".format(freq_average_both))
-                    print("Time: {} \n".format(total_time))
+                    # print("Time: {} \n".format(total_time))
 
                     list_times[rows_count] = utc_timestamp
                     calc_freq_both[rows_count] = freq_average_both
@@ -141,8 +142,8 @@ def main():
                     calc_freq_both = [None] * 1801
                     calc_freq_1 = [None] * 1801
                     calc_freq_2 = [None] * 1801
-                else:
-                    rows_count += 1
+
+                rows_count += 1
 
             csvfile.close()
 
