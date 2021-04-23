@@ -24,8 +24,9 @@ class Payload(Structure):
 # csv batch writer
 def event_handler_write(writer, batch_size, utc_timestamps, calc_freq_both, calc_freq_1, calc_freq_2):
     for i in range(batch_size):
-        print([utc_timestamps[i], calc_freq_both[i], calc_freq_1[i], calc_freq_2[i]])
-        writer.writerow([utc_timestamps[i], calc_freq_both[i], calc_freq_1[i], calc_freq_2[i]])
+        if calc_freq_both[i] != None:
+            # print([utc_timestamps[i], calc_freq_both[i], calc_freq_1[i], calc_freq_2[i]])
+            writer.writerow([utc_timestamps[i], calc_freq_both[i], calc_freq_1[i], calc_freq_2[i]])
     print("Wrote {} rows\n".format(len(calc_freq_both)))
 
 
