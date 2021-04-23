@@ -22,8 +22,8 @@ class Payload(Structure):
                 ("period", c_ulonglong)]
 
 # csv batch writer
-def event_handler_write(writer, utc_timestamps, calc_freq_both, calc_freq_1, calc_freq_2):
-    for i in range(len(calc_freq_both)):
+def event_handler_write(writer, batch_size, utc_timestamps, calc_freq_both, calc_freq_1, calc_freq_2):
+    for i in range(batch_size):
         print([utc_timestamps[i], calc_freq_both[i], calc_freq_1[i], calc_freq_2[i]])
         writer.writerow([utc_timestamps[i], calc_freq_both[i], calc_freq_1[i], calc_freq_2[i]])
     print("Wrote {} rows\n".format(len(calc_freq_both)))
@@ -69,12 +69,13 @@ def main():
         splitter = 0
         old_freq = 0
 
+        batch_size = 10
 
         # To optimize Python garbage collector, instead of appending to lists we init them then change values
-        calc_freq_both = [None] * 1801
-        calc_freq_1 = [None] * 1801
-        calc_freq_2 = [None] * 1801
-        list_times = [None] * 1801
+        calc_freq_both = [None] * batch_size
+        calc_freq_1 = [None] * batch_size
+        calc_freq_2 = [None] * batch_size
+        list_times = [None] * batch_size
 
         # We cannot use the garbage collctor trick here as we cannot know how large this could be now
         # In the future we can use an estimation with a safety and test
@@ -83,8 +84,7 @@ def main():
 
         rows_count = 1
         total_time = 0
-        # write to csv every 1800 rows
-        batch_size = 10
+
 
         while True:
             csock, client_address = ssock.accept()
@@ -137,12 +137,12 @@ def main():
 
                     
                     if rows_count >= batch_size:
-                        event_handler_write(writer, list_times, calc_freq_both, calc_freq_1, calc_freq_2)
+                        event_handler_write(writer, batch_size, list_times, calc_freq_both, calc_freq_1, calc_freq_2)
                         rows_count = 1
-                        list_times = [None] * 1801
-                        calc_freq_both = [None] * 1801
-                        calc_freq_1 = [None] * 1801
-                        calc_freq_2 = [None] * 1801
+                        list_times = [None] * batch_size
+                        calc_freq_both = [None] * batch_size
+                        calc_freq_1 = [None] * batch_size
+                        calc_freq_2 = [None] * batch_size
 
                     rows_count += 1
 
