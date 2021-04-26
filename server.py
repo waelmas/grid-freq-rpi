@@ -122,9 +122,9 @@ def main():
                     freq_average_2 = sum(freq_list_2) / len(freq_list_2)
                     freq_average_1 = sum(freq_list_1) / len(freq_list_1)
                     freq_average_both = (sum(freq_list_1) + sum(freq_list_2)) / (len(freq_list_1) + len(freq_list_2))
-                    # print("Average 1: {} Average 2: {} \n".format(freq_average_1, freq_average_2))
-                    # print("Totoal Average: {} \n".format(freq_average_both))
-                    print(freq)
+                    print("Average 1: {} Average 2: {} \n".format(freq_average_1, freq_average_2))
+                    print("Totoal Average: {} \n".format(freq_average_both))
+                    print("Moment reading: {}".format(freq))
                     # print("Time: {} \n".format(total_time))
 
                     
@@ -132,6 +132,9 @@ def main():
                     calc_freq_both[rows_count] = freq_average_both
                     calc_freq_1[rows_count] = freq_average_1
                     calc_freq_2[rows_count] = freq_average_2
+
+                    freq_list_1 = []
+                    freq_list_2 = []
                     
 
 
