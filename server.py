@@ -114,7 +114,7 @@ def main():
 
                 buff = csock.recv(512)
                 splitter += 1
-                if total_time >= 1.00:
+                if total_time >= 1.0000000001:
                     # get timestamp before other operations to be as close as possible to the source time
                     utc_posix = datetime.now().timestamp()
                     utc_timestamp = datetime.utcfromtimestamp(utc_posix).strftime('%Y-%m-%d %H:%M:%S.%f%z')
@@ -122,8 +122,9 @@ def main():
                     freq_average_2 = sum(freq_list_2) / len(freq_list_2)
                     freq_average_1 = sum(freq_list_1) / len(freq_list_1)
                     freq_average_both = (sum(freq_list_1) + sum(freq_list_2)) / (len(freq_list_1) + len(freq_list_2))
-                    print("Average 1: {} Average 2: {} \n".format(freq_average_1, freq_average_2))
-                    print("Totoal Average: {} \n".format(freq_average_both))
+                    # print("Average 1: {} Average 2: {} \n".format(freq_average_1, freq_average_2))
+                    # print("Totoal Average: {} \n".format(freq_average_both))
+                    print(freq)
                     # print("Time: {} \n".format(total_time))
 
                     
