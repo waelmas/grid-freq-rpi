@@ -70,7 +70,7 @@ def main():
         splitter = 0
         old_freq = 0
 
-        batch_size = 1800
+        batch_size = 900
 
         # To optimize Python garbage collector, instead of appending to lists we init them then change values
         calc_freq_both = [None] * (batch_size + 1)
