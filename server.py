@@ -22,11 +22,11 @@ class Payload(Structure):
                 ("period", c_ulonglong)]
 
 # csv batch writer
-def event_handler_write(writer, batch_size, utc_timestamps, calc_freq_both, calc_freq_1, calc_freq_2, max_freq, min_freq):
+def event_handler_write(writer, batch_size, utc_timestamps, calc_freq_both, calc_freq_1, calc_freq_2, max_freq_list, min_freq_list):
     for i in range(batch_size):
         if calc_freq_both[i] != None:
             # print([utc_timestamps[i], calc_freq_both[i], calc_freq_1[i], calc_freq_2[i]])
-            writer.writerow([utc_timestamps[i], calc_freq_both[i], calc_freq_1[i], calc_freq_2[i], max_freq[i], min_freq[i]])
+            writer.writerow([utc_timestamps[i], calc_freq_both[i], calc_freq_1[i], calc_freq_2[i], max_freq_list[i], min_freq_list[i]])
     print("Wrote {} rows\n".format(len(calc_freq_both)))
 
 
@@ -152,12 +152,14 @@ def main():
 
                     
                     if rows_count >= batch_size:
-                        event_handler_write(writer, batch_size, list_times, calc_freq_both, calc_freq_1, calc_freq_2, max_freq, min_freq)
+                        event_handler_write(writer, batch_size, list_times, calc_freq_both, calc_freq_1, calc_freq_2, max_freq_list, min_freq_list)
                         rows_count = 1
                         list_times = [None] * (batch_size + 1)
                         calc_freq_both = [None] * (batch_size + 1)
                         calc_freq_1 = [None] * (batch_size + 1)
                         calc_freq_2 = [None] * (batch_size + 1)
+                        max_freq_list = [None] * (batch_size + 1)
+                        min_freq_list = [None] * (batch_size + 1)
 
                     rows_count += 1
 
