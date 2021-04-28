@@ -22,11 +22,11 @@ class Payload(Structure):
                 ("period", c_ulonglong)]
 
 # csv batch writer
-def event_handler_write(writer, batch_size, utc_timestamps, calc_freq_both, calc_freq_1, calc_freq_2):
+def event_handler_write(writer, batch_size, utc_timestamps, calc_freq_both, calc_freq_1, calc_freq_2, max_freq, min_freq):
     for i in range(batch_size):
         if calc_freq_both[i] != None:
             # print([utc_timestamps[i], calc_freq_both[i], calc_freq_1[i], calc_freq_2[i]])
-            writer.writerow([utc_timestamps[i], calc_freq_both[i], calc_freq_1[i], calc_freq_2[i]])
+            writer.writerow([utc_timestamps[i], calc_freq_both[i], calc_freq_1[i], calc_freq_2[i], max_freq[i], min_freq[i]])
     print("Wrote {} rows\n".format(len(calc_freq_both)))
 
 
@@ -48,7 +48,7 @@ def main():
 
     csvfile = open(outfile, 'w')
     writer = csv.writer(csvfile)
-    writer.writerow(["Timestamp UTC", "Freq Average Full", "Freq Average Half 1", "Freq Average Half 2"])
+    writer.writerow(["Timestamp UTC", "Freq Average Full", "Freq Average Half 1", "Freq Average Half 2", "Max Freq", "Min Freq"])
     csvfile.close()
 
     PORT = 2300
@@ -77,6 +77,8 @@ def main():
         calc_freq_1 = [None] * (batch_size + 1)
         calc_freq_2 = [None] * (batch_size + 1)
         list_times = [None] * (batch_size + 1)
+        max_freq_list = [None] * (batch_size + 1)
+        min_freq_list = [None] * (batch_size + 1)
 
         # We cannot use the garbage collctor trick here as we cannot know how large this could be now
         # In the future we can use an estimation with a safety and test
@@ -122,6 +124,10 @@ def main():
 
                     freq_average_2 = sum(freq_list_2) / len(freq_list_2)
                     freq_average_1 = sum(freq_list_1) / len(freq_list_1)
+
+                    max_freq = max(max(freq_list_1), max(freq_list_2))
+                    min_freq = min(min(freq_list_1), min(freq_list_2))
+
                     
                     freq_average_both = (sum(freq_list_1) + sum(freq_list_2)) / (len(freq_list_1) + len(freq_list_2))
                     print("Average 1: {} Average 2: {} \n".format(freq_average_1, freq_average_2))
@@ -134,6 +140,8 @@ def main():
                     calc_freq_both[rows_count] = freq_average_both
                     calc_freq_1[rows_count] = freq_average_1
                     calc_freq_2[rows_count] = freq_average_2
+                    max_freq_list[rows_count] = max_freq
+                    min_freq_list[rows_count] = min_freq
 
                     freq_list_1 = []
                     freq_list_2 = []
@@ -144,7 +152,7 @@ def main():
 
                     
                     if rows_count >= batch_size:
-                        event_handler_write(writer, batch_size, list_times, calc_freq_both, calc_freq_1, calc_freq_2)
+                        event_handler_write(writer, batch_size, list_times, calc_freq_both, calc_freq_1, calc_freq_2, max_freq, min_freq)
                         rows_count = 1
                         list_times = [None] * (batch_size + 1)
                         calc_freq_both = [None] * (batch_size + 1)
