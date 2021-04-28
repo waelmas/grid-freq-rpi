@@ -106,6 +106,7 @@ def main():
                 if (splitter % 2) == 0:
 
                     freq_list_1.append(freq)
+                    
                 else:
                     freq_list_2.append(freq)
                     old_freq = freq
@@ -121,6 +122,7 @@ def main():
 
                     freq_average_2 = sum(freq_list_2) / len(freq_list_2)
                     freq_average_1 = sum(freq_list_1) / len(freq_list_1)
+                    
                     freq_average_both = (sum(freq_list_1) + sum(freq_list_2)) / (len(freq_list_1) + len(freq_list_2))
                     print("Average 1: {} Average 2: {} \n".format(freq_average_1, freq_average_2))
                     print("Totoal Average: {} \n".format(freq_average_both))
