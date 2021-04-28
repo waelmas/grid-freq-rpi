@@ -130,9 +130,9 @@ def main():
 
                     
                     freq_average_both = (sum(freq_list_1) + sum(freq_list_2)) / (len(freq_list_1) + len(freq_list_2))
-                    print("Average 1: {} Average 2: {} \n".format(freq_average_1, freq_average_2))
+                    # print("Average 1: {} Average 2: {} \n".format(freq_average_1, freq_average_2))
                     print("Totoal Average: {} \n".format(freq_average_both))
-                    print("Moment reading: {}".format(freq))
+                    # print("Moment reading: {}".format(freq))
                     # print("Time: {} \n".format(total_time))
 
                     
