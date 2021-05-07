@@ -22,11 +22,11 @@ class Payload(Structure):
                 ("period", c_ulonglong)]
 
 # csv batch writer
-def event_handler_write(writer, batch_size, utc_timestamps, calc_freq_both, calc_freq_1, calc_freq_2, max_freq_list, min_freq_list):
+def event_handler_write(writer, batch_size, utc_timestamps, calc_freq_both, calc_freq_1, calc_freq_2, max_freq_list, min_freq_list, skipped_list):
     for i in range(batch_size):
         if calc_freq_both[i] != None:
             # print([utc_timestamps[i], calc_freq_both[i], calc_freq_1[i], calc_freq_2[i]])
-            writer.writerow([utc_timestamps[i], calc_freq_both[i], calc_freq_1[i], calc_freq_2[i], max_freq_list[i], min_freq_list[i]])
+            writer.writerow([utc_timestamps[i], calc_freq_both[i], calc_freq_1[i], calc_freq_2[i], max_freq_list[i], min_freq_list[i], skipped_list[i]])
     print("Wrote {} rows\n".format(len(calc_freq_both)))
 
 
@@ -48,7 +48,7 @@ def main():
 
     csvfile = open(outfile, 'w')
     writer = csv.writer(csvfile)
-    writer.writerow(["Timestamp UTC", "Freq Average Full", "Freq Average Half 1", "Freq Average Half 2", "Max Freq", "Min Freq"])
+    writer.writerow(["Timestamp UTC", "Freq Average Full", "Freq Average Half 1", "Freq Average Half 2", "Max Freq", "Min Freq", "Skipped Count"])
     csvfile.close()
 
     PORT = 2300
@@ -79,6 +79,7 @@ def main():
         list_times = [None] * (batch_size + 1)
         max_freq_list = [None] * (batch_size + 1)
         min_freq_list = [None] * (batch_size + 1)
+        skipped_list = [None] * (batch_size + 1)
 
         # We cannot use the garbage collctor trick here as we cannot know how large this could be now
         # In the future we can use an estimation with a safety and test
@@ -87,6 +88,7 @@ def main():
 
         rows_count = 1
         total_time = 0
+        skipped = 0
 
 
         while True:
@@ -106,12 +108,19 @@ def main():
                 total_time = total_time + (period1 * 0.000000001)
 
                 if (splitter % 2) == 0:
-
-                    freq_list_1.append(freq)
+                    if freq < 49.8 or freq > 50.2:
+                        # Wanna exclude this but also count them
+                        skipped += 1
+                    else:
+                        freq_list_1.append(freq)
                     
                 else:
-                    freq_list_2.append(freq)
-                    old_freq = freq
+                    if freq < 49.8 or freq > 50.2:
+                        # Wanna exclude this but also count them
+                        skipped += 1
+                    else:                            
+                        freq_list_2.append(freq)
+                        old_freq = freq
 
 
 
@@ -142,9 +151,11 @@ def main():
                     calc_freq_2[rows_count] = freq_average_2
                     max_freq_list[rows_count] = max_freq
                     min_freq_list[rows_count] = min_freq
+                    skipped_list[rows_count] = skipped
 
                     freq_list_1 = []
                     freq_list_2 = []
+                    skipped = 0
                     
 
 
@@ -152,7 +163,7 @@ def main():
 
                     
                     if rows_count >= batch_size:
-                        event_handler_write(writer, batch_size, list_times, calc_freq_both, calc_freq_1, calc_freq_2, max_freq_list, min_freq_list)
+                        event_handler_write(writer, batch_size, list_times, calc_freq_both, calc_freq_1, calc_freq_2, max_freq_list, min_freq_list, skipped_list)
                         rows_count = 1
                         list_times = [None] * (batch_size + 1)
                         calc_freq_both = [None] * (batch_size + 1)
@@ -160,6 +171,7 @@ def main():
                         calc_freq_2 = [None] * (batch_size + 1)
                         max_freq_list = [None] * (batch_size + 1)
                         min_freq_list = [None] * (batch_size + 1)
+                        skipped_list = [None] * (batch_size + 1)
 
                     rows_count += 1
 
