@@ -214,7 +214,7 @@ while(1){
                 // printf(child_message1);
                 memcpy(shmem, child_message1, sizeof(child_message1));
                 // after we got a peak, we wait before reading again to save CPU
-                sleep_before_next();
+                // sleep_before_next();
             } else{
                 // printf(child_message0);
                 memcpy(shmem, child_message0, sizeof(child_message0));
