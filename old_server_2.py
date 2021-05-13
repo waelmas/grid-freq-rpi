@@ -91,6 +91,9 @@ def main():
         total_time = 0
         skipped = 0
 
+        old_freq1 = 50
+        old_freq2 = 50
+
 
         while True:
             csock, client_address = ssock.accept()
