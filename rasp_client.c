@@ -73,7 +73,7 @@ void sleep_before_next1(void){
     struct timespec ts;
     int res;
     ts.tv_sec = 0; // 0 seconds
-    ts.tv_nsec =  200000; // nanoseconds
+    ts.tv_nsec =  200; // nanoseconds
     res = nanosleep(&ts, &ts);
 }
 
@@ -245,7 +245,7 @@ while(1){
             // printf("RAM: %s \n", shmem);
             
             nanos_now = get_nanos();
-            if (nanos_now - last_nanos > 8000000){
+            if (nanos_now - last_nanos > 8000000 && last_val == 0){
                 nanos = get_nanos();
                 time_dif = nanos - last_nanos;
                 // printf("nanos: %llu & last_nanos: %llu\n", nanos, last_nanos);
@@ -268,7 +268,7 @@ while(1){
 
                 }
             last_val = 1;
-        } else if (nanos_now - last_nanos <= 8000000){
+        } else if (nanos_now - last_nanos <= 8000000 && last_val == 1){
             //  printf("OFF\n %s \n", shmem);
              last_val = 0;
              // after we got a peak, we wait before reading again to save CPU
