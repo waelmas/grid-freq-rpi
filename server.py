@@ -84,8 +84,8 @@ def main():
         # We cannot use the garbage collctor trick here as we cannot know how large this could be now
         # In the future we can use an estimation with a safety and test
         #  starting with one value to avoid division by zero when measurement is started or stopped
-        freq_list_1 = [50.0]
-        freq_list_2 = [50.0]
+        freq_list_1 = []
+        freq_list_2 = []
 
         rows_count = 1
         total_time = 0
