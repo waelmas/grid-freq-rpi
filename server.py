@@ -91,6 +91,8 @@ def main():
         total_time = 0
         skipped = 0
 
+        prev_average_1 = 50
+
 
         while True:
             csock, client_address = ssock.accept()
@@ -109,18 +111,26 @@ def main():
                 total_time = total_time + (period1 * 0.000000001)
 
                 if (splitter % 2) == 0:
-                    # Exclude partial measurement if it's a lot different from the previous second average
-                    if freq < freq_average_1[-1]-0.1 or freq > freq_average_1[-1]+0.1:
-                        # Wanna exclude this but also count them
-                        skipped += 1
-                    else:
+                    # adding try except as the first time freq_average_1 will not have been assigned
+                    try:
+                        # Exclude partial measurement if it's a lot different from the previous second average
+                        if freq < freq_average_1-0.1 or freq > freq_average_1+0.1:
+                            # Wanna exclude this but also count them
+                            skipped += 1
+                        else:
+                            freq_list_1.append(freq)
+                    except:
                         freq_list_1.append(freq)
                     
                 else:
-                    if freq < freq_average_2[-1]-0.1 or freq > freq_average_2[-1]+0.1:
-                        # Wanna exclude this but also count them
-                        skipped += 1
-                    else:                            
+                    try:
+                        if freq < freq_average_2-0.1 or freq > freq_average_2+0.1:
+                            # Wanna exclude this but also count them
+                            skipped += 1
+                        else:                            
+                            freq_list_2.append(freq)
+                            old_freq = freq
+                    except:
                         freq_list_2.append(freq)
                         old_freq = freq
 
