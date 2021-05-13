@@ -136,18 +136,20 @@ def main():
                 if total_time >= 1.0000000000001:
                     if seconds_count <= 30:
                         seconds_count += 1
+                        print("Skippint first 30 seconds...\n")
                         continue
                     # get timestamp before other operations to be as close as possible to the source time
                     utc_posix = datetime.now().timestamp()
                     utc_timestamp = datetime.utcfromtimestamp(utc_posix).strftime('%Y-%m-%d %H:%M:%S.%f%z')
 
-                    if len(freq_list_1) > 0 and len(freq_list_2) >0:
+                    if len(freq_list_1) > 0 and len(freq_list_2) > 0:
                         freq_average_2 = sum(freq_list_2) / len(freq_list_2)
                         freq_average_1 = sum(freq_list_1) / len(freq_list_1)
                         freq_average_both = (sum(freq_list_1) + sum(freq_list_2)) / (len(freq_list_1) + len(freq_list_2))
                         max_freq = max(max(freq_list_1), max(freq_list_2))
                         min_freq = min(min(freq_list_1), min(freq_list_2))
                     else:
+                        print("EMPTY: {}, {} \n".format(freq_list_1, freq_list_2))
                         freq_average_2 = old_freq2
                         freq_average_1 = old_freq1
                         freq_average_both = (old_freq1 + old_freq2)/2
