@@ -109,14 +109,15 @@ def main():
                 total_time = total_time + (period1 * 0.000000001)
 
                 if (splitter % 2) == 0:
-                    if freq < 49.8 or freq > 50.2:
+                    # Exclude partial measurement if it's a lot different from the previous second average
+                    if freq < freq_average_1[-1]-0.1 or freq > freq_average_1[-1]+0.1:
                         # Wanna exclude this but also count them
                         skipped += 1
                     else:
                         freq_list_1.append(freq)
                     
                 else:
-                    if freq < 49.8 or freq > 50.2:
+                    if freq < freq_average_2[-1]-0.1 or freq > freq_average_2[-1]+0.1:
                         # Wanna exclude this but also count them
                         skipped += 1
                     else:                            

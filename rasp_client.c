@@ -69,7 +69,12 @@ static unsigned long long get_nanos(void) {
 }
 
 
-
+void sleep_before_next(){
+    struct timespec ts;
+    ts.tv_sec = 0; // 0 seconds
+    ts.tv_nsec =  9803921; // nanoseconds
+    res = nanosleep(&ts, &ts);
+}
 
 
 int main()
@@ -144,6 +149,8 @@ int main()
 
     
 
+    
+
 while (1) {
 
     if (pid == 0) {
@@ -205,6 +212,8 @@ while(1){
             if(data.values[0]){
                 // printf(child_message1);
                 memcpy(shmem, child_message1, sizeof(child_message1));
+                // after we got a peak, we wait before reading again to save CPU
+                sleep_before_next();
             } else{
                 // printf(child_message0);
                 memcpy(shmem, child_message0, sizeof(child_message0));
@@ -241,11 +250,15 @@ while(1){
                 // p->id, p->counter, p->period);
 
 
+
+
                 }
             last_val = 1;
         } else if (last_val == 1){
             //  printf("OFF\n %s \n", shmem);
              last_val = 0;
+             // after we got a peak, we wait before reading again to save CPU
+             sleep_before_next();
         }
     // usleep(250000);
     }
