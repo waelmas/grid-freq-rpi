@@ -140,13 +140,16 @@ def main():
                         freq_average_2 = sum(freq_list_2) / len(freq_list_2)
                         freq_average_1 = sum(freq_list_1) / len(freq_list_1)
                         freq_average_both = (sum(freq_list_1) + sum(freq_list_2)) / (len(freq_list_1) + len(freq_list_2))
+                        max_freq = max(max(freq_list_1), max(freq_list_2))
+                        min_freq = min(min(freq_list_1), min(freq_list_2))
                     except:
                         freq_average_2 = old_freq2
                         freq_average_1 = old_freq1
                         freq_average_both = (old_freq1 + old_freq2)/2
+                        max_freq = 0
+                        min_freq = 0
 
-                    max_freq = max(max(freq_list_1), max(freq_list_2))
-                    min_freq = min(min(freq_list_1), min(freq_list_2))
+
 
                     
                     
@@ -164,8 +167,8 @@ def main():
                     min_freq_list[rows_count] = min_freq
                     skipped_list[rows_count] = skipped
 
-                    freq_list_1 = [50.0]
-                    freq_list_2 = [50.0]
+                    freq_list_1 = []
+                    freq_list_2 = []
                     skipped = 0
                     
 
