@@ -119,6 +119,7 @@ def main():
                         if freq < freq_average_1-0.1 or freq > freq_average_1+0.1:
                             # Wanna exclude this but also count them
                             skipped += 1
+                            last_wrong_1 = freq
                         else:
                             freq_list_1.append(freq)
                     else:
@@ -129,6 +130,7 @@ def main():
                         if freq < freq_average_2-0.1 or freq > freq_average_2+0.1:
                             # Wanna exclude this but also count them
                             skipped += 1
+                            last_wrong_2 = freq
                         else:                            
                             freq_list_2.append(freq)
                             old_freq = freq
@@ -140,19 +142,25 @@ def main():
 
                 buff = csock.recv(512)
                 splitter += 1
-                if total_time >= 1.0000000001:
+                if total_time >= 1.00000000000000001:
                     # get timestamp before other operations to be as close as possible to the source time
                     utc_posix = datetime.now().timestamp()
                     utc_timestamp = datetime.utcfromtimestamp(utc_posix).strftime('%Y-%m-%d %H:%M:%S.%f%z')
 
-                    freq_average_2 = sum(freq_list_2) / len(freq_list_2)
-                    freq_average_1 = sum(freq_list_1) / len(freq_list_1)
+                    try:
+                        freq_average_2 = sum(freq_list_2) / len(freq_list_2)
+                        freq_average_1 = sum(freq_list_1) / len(freq_list_1)
+                        freq_average_both = (sum(freq_list_1) + sum(freq_list_2)) / (len(freq_list_1) + len(freq_list_2))
+                    except:
+                        freq_average_2 = last_wrong_2
+                        freq_average_1 = last_wrong_1
+                        freq_average_both = (last_wrong_1 + last_wrong_2) / 2
 
                     max_freq = max(max(freq_list_1), max(freq_list_2))
                     min_freq = min(min(freq_list_1), min(freq_list_2))
 
                     
-                    freq_average_both = (sum(freq_list_1) + sum(freq_list_2)) / (len(freq_list_1) + len(freq_list_2))
+                    
                     # print("Average 1: {} Average 2: {} \n".format(freq_average_1, freq_average_2))
                     print("Totoal Average: {} \n".format(freq_average_both))
                     # print("Moment reading: {}".format(freq))
