@@ -91,8 +91,10 @@ def main():
         total_time = 0
         skipped = 0
 
-        old_freq1 = 50
-        old_freq2 = 50
+        old_freq1 = 0
+        old_freq2 = 0
+
+        seconds_count = 0
 
 
         while True:
@@ -131,18 +133,20 @@ def main():
 
                 buff = csock.recv(512)
                 splitter += 1
-                if total_time >= 1.0000000001:
+                if total_time >= 1.0000000000001:
+                    if seconds_count <= 30:
+                        continue
                     # get timestamp before other operations to be as close as possible to the source time
                     utc_posix = datetime.now().timestamp()
                     utc_timestamp = datetime.utcfromtimestamp(utc_posix).strftime('%Y-%m-%d %H:%M:%S.%f%z')
 
-                    try:
+                    if len(freq_list_1) > 0 and len(freq_list_2) >0:
                         freq_average_2 = sum(freq_list_2) / len(freq_list_2)
                         freq_average_1 = sum(freq_list_1) / len(freq_list_1)
                         freq_average_both = (sum(freq_list_1) + sum(freq_list_2)) / (len(freq_list_1) + len(freq_list_2))
                         max_freq = max(max(freq_list_1), max(freq_list_2))
                         min_freq = min(min(freq_list_1), min(freq_list_2))
-                    except:
+                    else:
                         freq_average_2 = old_freq2
                         freq_average_1 = old_freq1
                         freq_average_both = (old_freq1 + old_freq2)/2
@@ -174,6 +178,8 @@ def main():
 
 
                     total_time = 0
+
+                    seconds_count += 1
 
                     
                     if rows_count >= batch_size:
