@@ -74,7 +74,7 @@ void sleep_before_next(void){
     int res;
     ts.tv_sec = 0; // 0 seconds
     ts.tv_nsec =  9803921; // nanoseconds
-    res = nanosleep(&ts, &ts);
+    res = nanosleep(&ts.tv_sec, &ts.tv_nsec);
 }
 
 void sleep_before_next2(void){
@@ -82,7 +82,7 @@ void sleep_before_next2(void){
     int res;
     ts.tv_sec = 0; // 0 seconds
     ts.tv_nsec =  8803921; // nanoseconds
-    res = nanosleep(&ts, &ts);
+    res = nanosleep(&ts.tv_sec, &ts.tv_nsec);
 }
 
 
@@ -222,11 +222,13 @@ while(1){
                 // printf(child_message1);
                 memcpy(shmem, child_message1, sizeof(child_message1));
                 // after we got a peak, we wait before reading again to save CPU
-                sleep_before_next();
+                
             } else{
                 // printf(child_message0);
                 memcpy(shmem, child_message0, sizeof(child_message0));
             }
+
+            sleep_before_next2();
          
 }
 
@@ -267,7 +269,7 @@ while(1){
             //  printf("OFF\n %s \n", shmem);
              last_val = 0;
              // after we got a peak, we wait before reading again to save CPU
-             sleep_before_next();
+             sleep_before_next2();
         }
     // usleep(250000);
     }
