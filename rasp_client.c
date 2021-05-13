@@ -73,7 +73,7 @@ void sleep_before_next(){
     struct timespec ts;
     int res;
     ts.tv_sec = 0; // 0 seconds
-    ts.tv_nsec =  9803921; // nanoseconds
+    ts.tv_nsec =  980392; // nanoseconds
     res = nanosleep(&ts, &ts);
 }
 
