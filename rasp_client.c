@@ -71,6 +71,7 @@ static unsigned long long get_nanos(void) {
 
 void sleep_before_next(){
     struct timespec ts;
+    int res;
     ts.tv_sec = 0; // 0 seconds
     ts.tv_nsec =  9803921; // nanoseconds
     res = nanosleep(&ts, &ts);
