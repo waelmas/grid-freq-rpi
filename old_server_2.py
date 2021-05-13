@@ -135,6 +135,7 @@ def main():
                 splitter += 1
                 if total_time >= 1.0000000000001:
                     if seconds_count <= 30:
+                        seconds_count += 1
                         continue
                     # get timestamp before other operations to be as close as possible to the source time
                     utc_posix = datetime.now().timestamp()
