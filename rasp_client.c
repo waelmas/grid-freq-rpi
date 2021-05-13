@@ -268,11 +268,11 @@ while(1){
 
                 }
             last_val = 1;
-        } else if (nanos_now - last_nanos <= 4000000 && last_val == 1){
+        } else if (nanos_now - last_nanos <= 4000000 || last_val == 1){
             //  printf("OFF\n %s \n", shmem);
              last_val = 0;
              // after we got a peak, we wait before reading again to save CPU
-             sleep_before_next2();
+            //  sleep_before_next2();
         }
     // usleep(250000);
     }
