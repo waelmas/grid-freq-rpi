@@ -91,7 +91,9 @@ def main():
         total_time = 0
         skipped = 0
 
-        prev_average_1 = 50
+        seconds_counter = 0
+
+
 
 
         while True:
@@ -112,25 +114,25 @@ def main():
 
                 if (splitter % 2) == 0:
                     # adding try except as the first time freq_average_1 will not have been assigned
-                    try:
+                    if seconds_counter >= 30:
                         # Exclude partial measurement if it's a lot different from the previous second average
                         if freq < freq_average_1-0.1 or freq > freq_average_1+0.1:
                             # Wanna exclude this but also count them
                             skipped += 1
                         else:
                             freq_list_1.append(freq)
-                    except:
+                    else:
                         freq_list_1.append(freq)
                     
                 else:
-                    try:
+                    if seconds_counter >= 30:
                         if freq < freq_average_2-0.1 or freq > freq_average_2+0.1:
                             # Wanna exclude this but also count them
                             skipped += 1
                         else:                            
                             freq_list_2.append(freq)
                             old_freq = freq
-                    except:
+                    else:
                         freq_list_2.append(freq)
                         old_freq = freq
 
@@ -168,10 +170,10 @@ def main():
                     freq_list_1 = [50.0]
                     freq_list_2 = [50.0]
                     skipped = 0
-                    
-
 
                     total_time = 0
+
+                    seconds_counter += 1
 
                     
                     if rows_count >= batch_size:
