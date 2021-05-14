@@ -33,9 +33,9 @@ def event_handler_write(writer, batch_size, utc_timestamps, calc_freq_both, calc
     print("\nWrote {} rows\n".format(len(calc_freq_both)))
 
 
-def live_print(data):
+def live_print(data, rows_count, batch_size):
     stdout.flush()
-    stdout.write("\r%s" % data)
+    stdout.write("\r %d/%d Frequency: %s" % rows_count,batch_size,data)
     # stdout.write("\n") # move the cursor to the next line
     return
 
@@ -151,7 +151,7 @@ def main():
                     freq_average_both = (sum(freq_list_1) + sum(freq_list_2)) / (len(freq_list_1) + len(freq_list_2))
                     # print("Average 1: {} Average 2: {} \n".format(freq_average_1, freq_average_2))
                     # print("Totoal Average: {} \n".format(freq_average_both))
-                    live_print("Totoal Average: {} ".format(freq_average_both))
+                    live_print("Totoal Average: {} ".format(freq_average_both), rows_count, batch_size)
                     # print("Totoal Average: {} \n".format(freq_average_both), sep=' ', end='', flush=True)
                     # print("Moment reading: {}".format(freq))
                     # print("Time: {} \n".format(total_time))
