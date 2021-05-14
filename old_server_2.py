@@ -94,7 +94,7 @@ def main():
         old_freq1 = 0
         old_freq2 = 0
 
-        seconds_count = 0
+        seconds_count, seconds_counter = 0
 
 
         while True:
@@ -102,6 +102,32 @@ def main():
 
 
             buff = csock.recv(512)
+
+            # while buff:
+
+            #     payload_in = Payload.from_buffer_copy(buff)
+
+            #     period1 = payload_in.period
+            #     seconds_p = (period1 * 2) * 0.000000001
+            #     freq = 1 / seconds_p
+
+            #     total_time = total_time + (period1 * 0.000000001)
+
+            #     if (splitter % 2) == 0:
+            #         if freq < 49.8 or freq > 50.2:
+            #             # Wanna exclude this but also count them
+            #             skipped += 1
+            #         else:
+            #             freq_list_1.append(freq)
+            #             old_freq1 = freq
+                    
+            #     else:
+            #         if freq < 49.8 or freq > 50.2:
+            #             # Wanna exclude this but also count them
+            #             skipped += 1
+            #         else:                            
+            #             freq_list_2.append(freq)
+            #             old_freq2 = freq
 
             while buff:
 
@@ -114,21 +140,30 @@ def main():
                 total_time = total_time + (period1 * 0.000000001)
 
                 if (splitter % 2) == 0:
-                    if freq < 49.8 or freq > 50.2:
-                        # Wanna exclude this but also count them
-                        skipped += 1
+                    # adding try except as the first time freq_average_1 will not have been assigned
+                    if seconds_counter >= 30:
+                        # Exclude partial measurement if it's a lot different from the previous second average
+                        if freq < freq_average_1-0.1 or freq > freq_average_1+0.1:
+                            # Wanna exclude this but also count them
+                            skipped += 1
+                            last_wrong_1 = freq
+                        else:
+                            freq_list_1.append(freq)
                     else:
                         freq_list_1.append(freq)
-                        old_freq1 = freq
                     
                 else:
-                    if freq < 49.8 or freq > 50.2:
-                        # Wanna exclude this but also count them
-                        skipped += 1
-                    else:                            
+                    if seconds_counter >= 30:
+                        if freq < freq_average_2-0.1 or freq > freq_average_2+0.1:
+                            # Wanna exclude this but also count them
+                            skipped += 1
+                            last_wrong_2 = freq
+                        else:                            
+                            freq_list_2.append(freq)
+                            old_freq = freq
+                    else:
                         freq_list_2.append(freq)
-                        old_freq2 = freq
-
+                        old_freq = freq
 
 
                 buff = csock.recv(512)
