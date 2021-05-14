@@ -213,27 +213,27 @@ while (1) {
 
 
 
-while(1){
+        while(1){
 
-            ret = ioctl(req.fd,  GPIOHANDLE_GET_LINE_VALUES_IOCTL, &data);
+                    ret = ioctl(req.fd,  GPIOHANDLE_GET_LINE_VALUES_IOCTL, &data);
 
 
-          
-            if(data.values[0]){
-                // printf(child_message1);
-                memcpy(shmem, child_message1, sizeof(child_message1));
-                // after we got a peak, we wait before reading again to save CPU
-                // sleep_before_next1();
                 
-            } else{
-                // printf(child_message0);
-                memcpy(shmem, child_message0, sizeof(child_message0));
-                // sleep_before_next2();
-            }
+                    if(data.values[0]){
+                        // printf(child_message1);
+                        memcpy(shmem, child_message1, sizeof(child_message1));
+                        // after we got a peak, we wait before reading again to save CPU
+                        // sleep_before_next1();
+                        
+                    } else{
+                        // printf(child_message0);
+                        memcpy(shmem, child_message0, sizeof(child_message0));
+                        // sleep_before_next2();
+                    }
 
-            
-         
-}
+                    
+                
+        }
 
 
 
@@ -263,7 +263,7 @@ while(1){
                 // printf("Received id=%d, counter=%d, period=%09llu\n",
                 // p->id, p->counter, p->period);
 
-                sleep_before_next1();
+                // sleep_before_next1();
 
 
                 }
@@ -277,7 +277,8 @@ while(1){
     // usleep(250000);
     }
     i = i+1;
-    }
+    sleep_before_next1();
+}
     
     // close the socket
     close(sock);
