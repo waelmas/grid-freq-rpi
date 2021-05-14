@@ -15,6 +15,9 @@ from datetime import datetime
 import csv
 import os.path
 
+from sys import stdout
+from time import sleep
+
 """ This class defines a C-like struct """
 class Payload(Structure):
     _fields_ = [("id", c_uint32),
@@ -29,6 +32,12 @@ def event_handler_write(writer, batch_size, utc_timestamps, calc_freq_both, calc
             writer.writerow([utc_timestamps[i], calc_freq_both[i], calc_freq_1[i], calc_freq_2[i], max_freq_list[i], min_freq_list[i], skipped_list[i]])
     print("\nWrote {} rows\n".format(len(calc_freq_both)))
 
+
+def live_print(data):
+    stdout.flush()
+    stdout.write("\r%s" % data)
+    # stdout.write("\n") # move the cursor to the next line
+    return
 
 def main():
     outfile = 'data/data_.csv'
@@ -142,7 +151,8 @@ def main():
                     freq_average_both = (sum(freq_list_1) + sum(freq_list_2)) / (len(freq_list_1) + len(freq_list_2))
                     # print("Average 1: {} Average 2: {} \n".format(freq_average_1, freq_average_2))
                     # print("Totoal Average: {} \n".format(freq_average_both))
-                    print("Totoal Average: {} \n".format(freq_average_both), sep=' ', end='', flush=True)
+                    live_print("Totoal Average: {} ".format(freq_average_both))
+                    # print("Totoal Average: {} \n".format(freq_average_both), sep=' ', end='', flush=True)
                     # print("Moment reading: {}".format(freq))
                     # print("Time: {} \n".format(total_time))
 
