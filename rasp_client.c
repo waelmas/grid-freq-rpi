@@ -277,7 +277,7 @@ while (1) {
     // usleep(250000);
     }
     i = i+1;
-    sleep_before_next1();
+    // sleep_before_next1();
 }
     
     // close the socket
