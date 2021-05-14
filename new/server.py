@@ -35,7 +35,7 @@ def event_handler_write(writer, batch_size, utc_timestamps, calc_freq_both, calc
 
 def live_print(data, rows_count, batch_size):
     stdout.flush()
-    stdout.write("\r %d/%d Frequency: %s" % rows_count,batch_size,data)
+    stdout.write("\r {}/{} Frequency: {}".format(rows_count,batch_size,data))
     # stdout.write("\n") # move the cursor to the next line
     return
 
