@@ -94,7 +94,8 @@ def main():
         old_freq1 = 0
         old_freq2 = 0
 
-        seconds_count, seconds_counter = 0
+        seconds_count = 0
+        seconds_counter = 0
 
 
         while True:
